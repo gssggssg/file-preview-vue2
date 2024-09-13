@@ -1,6 +1,6 @@
 {
   "name": "file-preview-vue2",
-  "version": "0.1.8",
+  "version": "0.1.10",
   "description": "vue2在线预览文件组件",
   "author": "gssggssg <490104722@qq.com>",
   "main": "./src/index.js",
@@ -23,17 +23,8 @@
     "core-js": "^3.8.3",
     "jshint": "^2.13.6",
     "jsonlint-mod": "^1.7.6",
-    "vue": "^2.6.14"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue-office/docx": "^1.6.0",
-    "@vue-office/excel": "^1.7.1",
-    "@vue-office/pdf": "^1.6.5",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
+    "stream-browserify": "^3.0.0",
+    "vue": "^2.6.14",
     "aplayer": "^1.10.1",
     "d3": "^3.5.17",
     "dimple": "git+https://gitee.com/mirrors/dimple.git#2.3.0",
@@ -48,6 +39,16 @@
     "vue-demi": "^0.14.5",
     "vue-template-compiler": "^2.6.14",
     "xgplayer": "^3.0.14"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue-office/docx": "^1.6.0",
+    "@vue-office/excel": "^1.7.1",
+    "@vue-office/pdf": "^1.6.5",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0"
   },
   "eslintConfig": {
     "root": true,

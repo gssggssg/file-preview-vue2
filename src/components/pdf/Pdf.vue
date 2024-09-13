@@ -1,15 +1,12 @@
 <template>
-  <vue-office-pdf :src="pdf" @rendered="rendered" />
+  <div id="file-preview-vue2-pdf"></div>
 </template>
 
 <script>
-// 引入VueOfficePdf组件
-import VueOfficePdf from '@vue-office/pdf'
+import jsPreviewPdf from "@js-preview/pdf";
 
 export default {
-  components: {
-    VueOfficePdf,
-  },
+  components: {},
   props: {
     pdf: {
       type: String,
@@ -18,14 +15,36 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      myDocxPreviewer: null
+    }
   },
-  mounted() {
+  watch: {
+    pdf: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        this.previewArea(value)
+      }
+    }
   },
   methods: {
-    rendered() {
-      console.log('渲染完成')
-    },
-  },
+    previewArea(fileUrl) {
+      this.$nextTick(() => {
+        const dom = document.getElementById('file-preview-vue2-pdf')
+        if(dom){
+          const myPdfPreviewer = jsPreviewPdf.init(dom, {
+            onError: (e) => {
+              console.log('加载', e)
+            },
+            onRendered: () => {
+              console.log('渲染完成')
+            }
+          });
+          myPdfPreviewer.preview(fileUrl);
+        }
+      })
+    }
+  }
 }
 </script>

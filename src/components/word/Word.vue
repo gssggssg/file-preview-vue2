@@ -1,23 +1,14 @@
 <template>
-  <div>
-    <vue-office-docx
-      :src="docx"
-      style="height: 100%; margin: 0; padding: 0"
-      @rendered="rendered"
-    />
-  </div>
+  <div id="file-preview-vue2-docx" style="height: 100%; margin: 0; padding: 0"></div>
 </template>
 
 <script>
-//引入VueOfficeDocx组件
-import VueOfficeDocx from "@vue-office/docx";
-//引入相关样式
-import "@vue-office/docx/lib/index.css";
+import jsPreviewDocx from "@js-preview/docx";
+import '@js-preview/docx/lib/index.css'
+import jsPreviewExcel from "@js-preview/excel";
 
 export default {
-  components: {
-    VueOfficeDocx,
-  },
+  components: {},
   props: {
     docx: {
       type: String,
@@ -26,12 +17,33 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      myDocxPreviewer: null
+    }
+  },
+  watch: {
+    docx: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        this.previewArea(value)
+      }
+    }
   },
   methods: {
-    rendered() {
-      console.log("渲染完成");
-    },
-  },
+    previewArea(fileUrl) {
+      this.$nextTick(() => {
+        const dom = document.getElementById('file-preview-vue2-docx')
+        if (dom) {
+          const myDocxPreviewer = jsPreviewDocx.init(dom);
+          myDocxPreviewer.preview(fileUrl).then(res => {
+            console.log('预览完成', res);
+          }).catch(e => {
+            console.log('预览失败', e);
+          })
+        }
+      })
+    }
+  }
 };
 </script>

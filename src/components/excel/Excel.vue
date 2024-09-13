@@ -1,22 +1,13 @@
 <template>
-  <vue-office-excel
-    :src="excel"
-    @rendered="renderedHandler"
-    @error="errorHandler"
-    style="height: calc(100vh - 90px);"
-  />
+  <div id="file-preview-vue2-excel" style="height: calc(100vh - 90px);"></div>
 </template>
 
 <script>
-// 引入VueOfficeExcel组件
-import VueOfficeExcel from '@vue-office/excel'
-// 引入相关样式
-import '@vue-office/excel/lib/index.css'
+import jsPreviewExcel from "@js-preview/excel";
+import '@js-preview/excel/lib/index.css';
 
 export default {
-  components: {
-    VueOfficeExcel,
-  },
+  components: {},
   props: {
     excel: {
       type: String,
@@ -25,15 +16,35 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      myDocxPreviewer: null
+    }
+  },
+  watch: {
+    excel: {
+      deep: true,
+      immediate: true,
+      handler(value) {
+        this.previewArea(value)
+      }
+    }
+  },
+  mounted() {
   },
   methods: {
-    renderedHandler() {
-      console.log('渲染完成')
-    },
-    errorHandler() {
-      console.log('渲染失败')
-    },
-  },
+    previewArea(fileUrl) {
+      this.$nextTick(() => {
+        const dom = document.getElementById('file-preview-vue2-excel')
+        if(dom){
+          const myExcelPreviewer = jsPreviewExcel.init(dom);
+          myExcelPreviewer.preview(fileUrl).then(res=>{
+            console.log('预览完成');
+          }).catch(e=>{
+            console.log('预览失败', e);
+          })
+        }
+      })
+    }
+  }
 }
 </script>

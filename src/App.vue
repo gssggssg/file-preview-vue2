@@ -106,7 +106,6 @@ export default {
       deep: true,
       handler(value) {
         const { fileUrl, suffix, originalName } = value
-        console.log('value======>',value)
         if(!fileUrl) {
           return
         }
@@ -114,7 +113,6 @@ export default {
           extend: suffix,
           src: fileUrl,
         }
-        console.log('  this.curFile===>',  this.curFile)
         this.filename = originalName
       },
     },
