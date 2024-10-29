@@ -12,6 +12,10 @@
     "lint": "vue-cli-service lint",
     "lib": "vue-cli-service build --target lib ./index.js --Vue2FilePreview --dest Vue2FilePreview"
   },
+  "peerDependencies": {
+    "@vue/composition-api": "^1.7.1",
+    "vue": "^2.0.0"
+  },
   "dependencies": {
     "codemirror": "^5.65.17",
     "core-js": "^3.8.3",
