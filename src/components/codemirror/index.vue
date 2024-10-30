@@ -1,31 +1,50 @@
 <template>
   <div class="code-mirror-div">
-
     <!-- <h2 style="text-align: center">代码编辑器</h2> -->
     <div class="tool-bar">
       <span>请选择主题:</span>
-      <el-select v-model="cmTheme" placeholder="请选择" size="small" style="margin-left: 10px; width: 150px;">
-        <el-option v-for="item in cmThemeOptions" :key="item" :label="item" :value="item"></el-option>
+      <el-select
+        v-model="cmTheme"
+        placeholder="请选择"
+        size="small"
+        style=" margin-left: 10px;width: 150px;"
+      >
+        <el-option
+          v-for="item in cmThemeOptions"
+          :key="item"
+          :label="item"
+          :value="item"
+        ></el-option>
       </el-select>
       <span style="margin-left: 30px;">请选择编辑模式:</span>
       <el-select
         v-model="cmEditorMode"
         placeholder="请选择"
         size="small"
-        style="margin-left: 10px; width: 150px;"
+        style=" margin-left: 10px;width: 150px;"
         @change="onEditorModeChange"
       >
-        <el-option v-for="item in cmEditorModeOptions" :key="item" :label="item" :value="item"></el-option>
+        <el-option
+          v-for="item in cmEditorModeOptions"
+          :key="item"
+          :label="item"
+          :value="item"
+        ></el-option>
       </el-select>
       <span style="margin-left: 30px;">字体大小:</span>
       <el-select
         v-model="cmEditorSize"
         placeholder="请选择"
         size="small"
-        style="margin-left: 10px; width: 150px;"
+        style=" margin-left: 10px;width: 150px;"
         @change="onEditorSizeChange"
       >
-        <el-option v-for="item in cmEditorSizeOptions" :key="item" :label="item" :value="item"></el-option>
+        <el-option
+          v-for="item in cmEditorSizeOptions"
+          :key="item"
+          :label="item"
+          :value="item"
+        ></el-option>
       </el-select>
       <el-button
         type="primary"
@@ -35,7 +54,12 @@
         v-if="cmEditorMode == 'json'"
         >格式化json</el-button
       >
-      <el-button type="primary" size="small" style="margin-left: 30px;" @click="jsonPress" v-if="cmEditorMode == 'json'"
+      <el-button
+        type="primary"
+        size="small"
+        style="margin-left: 30px;"
+        @click="jsonPress"
+        v-if="cmEditorMode == 'json'"
         >压缩json</el-button
       >
     </div>
@@ -59,7 +83,8 @@ export default {
   props: {
     initCodeValue: {
       type: String,
-      default: `{"canvasStyleData":{"width":1280,"height":720,"scale":100,"color":"#000","opacity":1,
+      default:
+        `{"canvasStyleData":{"width":1280,"height":720,"scale":100,"color":"#000","opacity":1,
         "background":"#fff","fontSize":14,"backgroundColor":"rgba(232, 244, 200, 1)"}}`, // 代码
     },
     initEditorMode: {
@@ -71,7 +96,17 @@ export default {
     return {
       cmTheme: 'default', // codeMirror主题
       // codeMirror主题选项
-      cmEditorSizeOptions: ['10', '12', '14', '16', '18', '20', '24', '28', '32'],
+      cmEditorSizeOptions: [
+        '10',
+        '12',
+        '14',
+        '16',
+        '18',
+        '20',
+        '24',
+        '28',
+        '32',
+      ],
       cmThemeOptions: [
         'default',
         'idea',
@@ -138,7 +173,19 @@ export default {
         'zenburn',
       ],
       // 编辑模式选项
-      cmEditorModeOptions: ['json', 'java', 'sql', 'js', 'css', 'xml', 'html', 'yaml', 'md', 'py', 'txt'],
+      cmEditorModeOptions: [
+        'json',
+        'java',
+        'sql',
+        'js',
+        'css',
+        'xml',
+        'html',
+        'yaml',
+        'md',
+        'py',
+        'txt',
+      ],
       cmEditorMode: this.initEditorMode, // 编辑模式
       cmMode: 'application/json', // codeMirror模式
       jsonIndentation: 2, // json编辑模式下，json格式化缩进 支持字符或数字，最大不超过10，默认缩进2个空格
@@ -149,11 +196,19 @@ export default {
   },
 
   mounted() {
+    this.getCodeValue()
     this.onEditorModeChange(this.initEditorMode)
-    // var sd = document.getElementsByClassName('code-mirror')
-    // sd[0].style.fontSize = this.cmEditorSize + 'px'
+    var sd = document.getElementsByClassName('code-mirror')
+    sd[0].style.fontSize = this.cmEditorSize + 'px'
   },
   methods: {
+    getCodeValue(){
+      fetch(this.initCodeValue).then(response => response.text()).then(text => {
+        this.codeValue = text;
+      }).catch(error => {
+        console.error('获取文件失败:', error);
+      });
+    },
     // 切换编辑模式事件处理函数
     onEditorModeChange(value) {
       switch (value) {
@@ -245,3 +300,6 @@ export default {
   margin: -50px 2px 0 20px;
 }
 </style>
+
+
+
