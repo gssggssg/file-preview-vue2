@@ -1,30 +1,31 @@
 <template>
-  <div>
-    <viewer>
-      <img alt="图片" :src="src" class="image" />
-    </viewer>
-  </div>
+  <el-image
+    :src="fileList[0]"
+    :preview-src-list="fileList"
+    :fit="'contain'"
+  >
+    <img alt :src="fileList[0]" slot="error"/>
+  </el-image>
 </template>
 
 <script>
 export default {
   props: {
-    src: {
+    fileUrl: {
       type: String,
-      default: 'http://upyun.qkongtao.cn/chevereto/2022/08/30/onepiece.png',
+      default: '',
     },
   },
   data() {
     return {}
   },
+  computed:{
+    fileList(){
+      return this.fileUrl.split(',') || []
+    }
+  }
 }
 </script>
 
-<style scoped>
-.image {
-  display: block;
-  margin: 100px auto;
-  width: auto;
-  width: 600px;
-}
+<style>
 </style>

@@ -1,20 +1,21 @@
 <template>
-  <div :class="{ hidden }">
-    <!-- <div class="banner">
-      <div class="container">
-        <h1>
-          <div>
-            在线文档查看
-            <input class="file-select" type="file" @change="handleChange" />
-          </div>
-        </h1>
-      </div>
-    </div> -->
-    <div class="container">
-      <div v-show="loading" class="well loading">正在加载中，请耐心等待...</div>
-      <div v-show="!loading" class="well" ref="output" id="output"></div>
-    </div>
-  </div>
+  <iframe v-if="fileUrl" :src="`https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(fileUrl)}`" />
+<!--  <div :class="{ hidden }">-->
+<!--    &lt;!&ndash; <div class="banner">-->
+<!--      <div class="container">-->
+<!--        <h1>-->
+<!--          <div>-->
+<!--            在线文档查看-->
+<!--            <input class="file-select" type="file" @change="handleChange" />-->
+<!--          </div>-->
+<!--        </h1>-->
+<!--      </div>-->
+<!--    </div> &ndash;&gt;-->
+<!--    <div class="container">-->
+<!--      <div v-show="loading" class="well loading">正在加载中，请耐心等待...</div>-->
+<!--      <div v-show="!loading" class="well" ref="output" id="output"></div>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -30,7 +31,7 @@ export default {
   name: "ppt",
   props: {
     msg: String,
-    file: File,
+    fileUrl: File,
   },
   data() {
     return {
@@ -43,7 +44,7 @@ export default {
     };
   },
   watch: {
-    file: function (newVal, oldVal) {
+    fileUrl: function (newVal, oldVal) {
       // 第一个参数是新数据，第二个参数是旧数据
       // document.getElementById("pptNode").remove();
       this.handleChange();
@@ -70,7 +71,7 @@ export default {
       this.loading = true;
       try {
         // const [file] = e.target.files;
-        const file = this.file;
+        const file = this.fileUrl;
         const arrayBuffer = await readBuffer(file);
         this.loading = false;
         this.last = await this.displayResult(arrayBuffer, file);
@@ -105,7 +106,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .banner {
   overflow: auto;
   text-align: center;

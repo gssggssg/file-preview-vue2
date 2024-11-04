@@ -10,7 +10,7 @@ import 'aplayer/dist/APlayer.min.css'
 
 export default {
   props: {
-    musicList: {
+    fileUrl: {
       type: Array,
       default: [],
     },
@@ -25,10 +25,13 @@ export default {
   },
   methods: {
     initAPlayer() {
+      if(!Array.isArray(this.fileUrl)){
+        this.fileUrl = [this.fileUrl]
+      }
       const options = {
         container: document.getElementById('aplayer'),
         theme: '#e9e9e9',
-        audio: this.musicList,
+        audio: this.fileUrl,
       }
       const ap = new APlayer(options)
       this.myAPlayer = ap
@@ -37,5 +40,5 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 </style>

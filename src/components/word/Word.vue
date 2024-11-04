@@ -1,19 +1,17 @@
 <template>
-  <div id="file-preview-vue2-docx" style="height: 100%; margin: 0; padding: 0"></div>
+  <div ref="word" class="container-word"></div>
 </template>
 
 <script>
 import jsPreviewDocx from "@js-preview/docx";
 import '@js-preview/docx/lib/index.css'
-import jsPreviewExcel from "@js-preview/excel";
 
 export default {
-  components: {},
+  name: "Word",
   props: {
-    docx: {
+    fileUrl: {
       type: String,
-      default:
-        "http://qncdn.qkongtao.cn/lib/teamadmin/files/Hadoop2.7.1%E4%BC%AA%E5%88%86%E5%B8%83%E5%BC%8F%E9%9B%86%E7%BE%A4%E5%AE%89%E8%A3%85%E6%96%87%E6%A1%A3.docx", //设置文档网络地址，可以是相对地址
+      default: ''
     },
   },
   data() {
@@ -22,7 +20,7 @@ export default {
     }
   },
   watch: {
-    docx: {
+    fileUrl: {
       deep: true,
       immediate: true,
       handler(value) {
@@ -33,13 +31,13 @@ export default {
   methods: {
     previewArea(fileUrl) {
       this.$nextTick(() => {
-        const dom = document.getElementById('file-preview-vue2-docx')
-        if (dom) {
-          const myDocxPreviewer = jsPreviewDocx.init(dom);
+        const wordDom = this.$refs.word
+        if (wordDom) {
+          const myDocxPreviewer = jsPreviewDocx.init(wordDom);
           myDocxPreviewer.preview(fileUrl).then(res => {
-            console.log('预览完成', res);
+            this.$emit('load','loadSuccess', res)
           }).catch(e => {
-            console.log('预览失败', e);
+            this.$emit('load','loadFail', e)
           })
         }
       })
@@ -47,3 +45,12 @@ export default {
   }
 };
 </script>
+
+<style>
+.container-word {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>

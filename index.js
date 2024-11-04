@@ -1,5 +1,5 @@
 //import vue文件的name from 路径
-import Vue2FilePreview from "./src/components/PreviewFile/index.vue";
+import Vue2FilePreview from "./src/APP.vue";
 
 const components = [Vue2FilePreview];
 

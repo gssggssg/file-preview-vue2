@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div class="video">
-      <Bililiplayer :video="video"></Bililiplayer>
-    </div>
+    <Bililiplayer :video="video"></Bililiplayer>
   </div>
 </template>
 

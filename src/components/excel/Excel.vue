@@ -1,5 +1,5 @@
 <template>
-  <div id="file-preview-vue2-excel" style="height: calc(100vh - 90px);"></div>
+  <div ref="excel" class="container-excel"></div>
 </template>
 
 <script>
@@ -7,12 +7,11 @@ import jsPreviewExcel from "@js-preview/excel";
 import '@js-preview/excel/lib/index.css';
 
 export default {
-  components: {},
+  name: "Excel",
   props: {
-    excel: {
+    fileUrl: {
       type: String,
-      default:
-        'http://qncdn.qkongtao.cn/lib/teamadmin/files/2021%E5%B1%8A%E5%85%A8%E5%9B%BD%E5%90%84%E5%9C%B0%E6%B4%BE%E9%81%A3%E5%9C%B0%E5%9D%80.xlsx', // 设置文档地址
+      default: ''
     },
   },
   data() {
@@ -21,7 +20,7 @@ export default {
     }
   },
   watch: {
-    excel: {
+    fileUrl: {
       deep: true,
       immediate: true,
       handler(value) {
@@ -29,18 +28,16 @@ export default {
       }
     }
   },
-  mounted() {
-  },
   methods: {
     previewArea(fileUrl) {
       this.$nextTick(() => {
-        const dom = document.getElementById('file-preview-vue2-excel')
-        if(dom){
-          const myExcelPreviewer = jsPreviewExcel.init(dom);
+        const excelDom = this.$refs.excel
+        if(excelDom){
+          const myExcelPreviewer = jsPreviewExcel.init(excelDom);
           myExcelPreviewer.preview(fileUrl).then(res=>{
-            console.log('预览完成');
-          }).catch(e=>{
-            console.log('预览失败', e);
+            this.$emit('load','loadSuccess', res)
+          }).catch(e => {
+            this.$emit('load','loadFail', e)
           })
         }
       })
@@ -48,3 +45,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.container-excel {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+</style>

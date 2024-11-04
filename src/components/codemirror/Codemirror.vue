@@ -8,6 +8,7 @@
     @keydown.native="onKeyDown"
     @mousedown.native="onMouseDown"
     @paste.native="OnPaste"
+    class="container-codemirror"
   ></codemirror>
 </template>
 <script>
@@ -35,7 +36,6 @@ import 'codemirror/addon/lint/lint.css'
 import 'codemirror/addon/lint/lint.js'
 import 'codemirror/addon/lint/json-lint'
 const jsonlint = require("jsonlint-mod");
-console.log('jsonlint :>> ', jsonlint);
 window.jsonlint = jsonlint;
 import 'codemirror/addon/lint/javascript-lint.js'
 import 'codemirror/addon/fold/foldcode.js'
@@ -63,7 +63,13 @@ export default {
   components: {
     codemirror,
   },
-  props: ['cmTheme', 'cmMode', 'autoFormatJson', 'jsonIndentation', 'value'],
+  props: [
+    'cmTheme',
+    'cmMode',
+    'autoFormatJson',
+    'jsonIndentation',
+    'value'
+  ],
   data() {
     return {
       editorValue: '',
@@ -218,7 +224,15 @@ export default {
   },
 }
 </script>
-<style scope>
+<style scoped>
+.container-codemirror{
+  width: 100%;
+  height: 100%;
+}
+
+>>> .CodeMirror{
+  height: 100%;
+}
 /* 选中背景颜色 */
 
 .CodeMirror-selected {

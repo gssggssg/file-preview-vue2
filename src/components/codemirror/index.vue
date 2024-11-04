@@ -1,5 +1,5 @@
 <template>
-  <div class="code-mirror-div">
+  <div class="container-codemirror">
     <!-- <h2 style="text-align: center">代码编辑器</h2> -->
     <div class="tool-bar">
       <span>请选择主题:</span>
@@ -64,6 +64,7 @@
       >
     </div>
     <Codemirror
+      class="content-codemirror"
       ref="cmEditor"
       :cmTheme="cmTheme"
       :cmMode="cmMode"
@@ -75,19 +76,21 @@
   </div>
 </template>
 <script>
+import 'codemirror/lib/codemirror.css'
 import Codemirror from './Codemirror.vue'
+
 export default {
   components: {
     Codemirror,
   },
   props: {
-    initCodeValue: {
+    fileUrl: {
       type: String,
       default:
         `{"canvasStyleData":{"width":1280,"height":720,"scale":100,"color":"#000","opacity":1,
         "background":"#fff","fontSize":14,"backgroundColor":"rgba(232, 244, 200, 1)"}}`, // 代码
     },
-    initEditorMode: {
+    fileSuffix: {
       type: String,
       default: 'json', // 编辑模式
     },
@@ -186,24 +189,24 @@ export default {
         'py',
         'txt',
       ],
-      cmEditorMode: this.initEditorMode, // 编辑模式
+      cmEditorMode: this.fileSuffix, // 编辑模式
       cmMode: 'application/json', // codeMirror模式
       jsonIndentation: 2, // json编辑模式下，json格式化缩进 支持字符或数字，最大不超过10，默认缩进2个空格
       autoFormatJson: true, // json编辑模式下，输入框失去焦点时是否自动格式化，true 开启， false 关闭,
       cmEditorSize: '16',
-      codeValue: this.initCodeValue,
+      codeValue: this.fileUrl,
     }
   },
 
   mounted() {
     this.getCodeValue()
-    this.onEditorModeChange(this.initEditorMode)
+    this.onEditorModeChange(this.fileSuffix)
     var sd = document.getElementsByClassName('code-mirror')
     sd[0].style.fontSize = this.cmEditorSize + 'px'
   },
   methods: {
     getCodeValue(){
-      fetch(this.initCodeValue).then(response => response.text()).then(text => {
+      fetch(this.fileUrl).then(response => response.text()).then(text => {
         this.codeValue = text;
       }).catch(error => {
         console.error('获取文件失败:', error);
@@ -281,13 +284,17 @@ export default {
   },
 }
 </script>
-<style scope>
+<style scoped>
+.container-codemirror{
+  width: 100%;
+  height: 100%;
+}
 .code-mirror {
   position: absolute;
   inset: 0 5px 0 2px;
   margin-bottom: 50px;
   padding: 2px;
-  height: calc(100vh - 170px);
+  height: 100%;
 }
 
 .code-mirror-div {
@@ -297,7 +304,12 @@ export default {
 }
 
 .tool-bar {
-  margin: -50px 2px 0 20px;
+  height: 50px;
+  margin: 0;
+}
+.content-codemirror{
+  width: 100%;
+  height: calc(100% - 50px);
 }
 </style>
 
