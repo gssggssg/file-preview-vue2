@@ -11,19 +11,16 @@
 </template>
 
 <script>
-import PDFJS from 'pdfjs-dist';
+import * as PDFJS from 'pdfjs-dist';
 import workerSrc from 'pdfjs-dist/build/pdf.worker.entry';
 // import * as PDFJS from 'pdfjs-dist';
-//
-// console.log('PDFJS====>', PDFJS)
 // // import workerSrc from 'pdfjs-dist/build/pdf.worker.entry';
 // // import workerSrc from '../node_modules/pdfjs-dist/build/pdf.worker.entry';
 // // import workerSrc from  "pdfjs-dist/build/pdf.worker.min.js";
-//
 // // console.log('workerSrc===>',workerSrc)
 // PDFJS.GlobalWorkerOptions.workerSrc = "pdfjs-dist/build/pdf.worker.entry"
 
-// PDFJS.workerSrc = workerSrc;
+PDFJS.workerSrc = workerSrc;
 // import pdfHtml from '../../../public/pdfjs/web/viewer.html';
 
 // console.log('pdfHtml====>',pdfHtml)
